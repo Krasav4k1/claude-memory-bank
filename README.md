@@ -23,46 +23,56 @@ Claude will read these instructions and set everything up automatically.
 
 When a user asks you to set up this memory bank, follow these steps exactly:
 
-### Step 1: Download the install directory
+### Step 1: Download to temp directory
 
-Download the contents of the `install/` directory from this repository and place them in the user's project root. The `install/` directory mirrors the target project structure:
-
-- `install/.llm/` → project root `.llm/`
-- `install/.claude/` → project root `.claude/`
-
-Use this command to download and extract:
+Run this exact command — do NOT modify it:
 
 ```bash
 curl -L https://github.com/krasav4k1/claude-memory-bank/archive/main.tar.gz \
-  | tar -xz --strip-components=1 -C . claude-memory-bank-main/install/
+  | tar -xz -C /tmp
 ```
 
-This extracts into an `install/` directory in the project root, containing `.llm/`, `.claude/`, and `CLAUDE.md`.
+This creates `/tmp/claude-memory-bank-main/` with the full repo. The files you need are in `/tmp/claude-memory-bank-main/install/`.
 
-### Step 2: Move files into place
+### Step 2: Copy to project root
 
-Move the extracted directories from `install/` to the project root:
+Run these exact commands from the project root:
 
 ```bash
-cp -r install/.llm . && cp -r install/.claude . 
+cp -r /tmp/claude-memory-bank-main/install/.llm .
+cp -rn /tmp/claude-memory-bank-main/install/.claude .
 ```
 
-Then handle `CLAUDE.md`:
+If `.claude/` already exists, merge the contents:
 
-- **If `CLAUDE.md` does NOT exist** in the project root: `mv install/CLAUDE.md .`
+```bash
+cp -r /tmp/claude-memory-bank-main/install/.claude/agents .claude/
+cp -r /tmp/claude-memory-bank-main/install/.claude/skills .claude/
+```
 
-- **If `CLAUDE.md` DOES exist:** Prepend the memory bank content to the existing file:
-  ```bash
-  cat install/CLAUDE.md CLAUDE.md > CLAUDE.md.tmp && mv CLAUDE.md.tmp CLAUDE.md
-  ```
+### Step 3: Handle CLAUDE.md
 
-Finally, clean up: `rm -rf install/`
+**If `CLAUDE.md` does NOT exist** in the project root:
+```bash
+cp /tmp/claude-memory-bank-main/install/CLAUDE.md .
+```
 
-### Step 3: Initialize the memory bank
+**If `CLAUDE.md` DOES exist**, prepend the memory bank content:
+```bash
+cat /tmp/claude-memory-bank-main/install/CLAUDE.md CLAUDE.md > CLAUDE.md.tmp && mv CLAUDE.md.tmp CLAUDE.md
+```
+
+### Step 4: Clean up
+
+```bash
+rm -rf /tmp/claude-memory-bank-main
+```
+
+### Step 5: Initialize the memory bank
 
 Run `@"sync-memory-bank (agent)"` to populate the memory bank from the existing codebase. For greenfield projects with no code yet, skip this step — the memory bank will be populated as the project grows.
 
-### Step 4: Commit
+### Step 6: Commit
 
 Stage and commit all changes:
 
