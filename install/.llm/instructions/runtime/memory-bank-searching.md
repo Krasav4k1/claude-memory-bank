@@ -44,7 +44,7 @@ Adapt the format to the query — a simple question ("what fields does User have
 ## Search Strategies
 
 ### By Tag
-Search for documents containing specific tags in their YAML frontmatter (e.g., `#spring_security`, `#polls`).
+Search for documents containing specific tags in their YAML frontmatter (e.g., `#authentication`, `#billing`).
 
 ### By Content
 Search document bodies for relevant keywords: technical terms, class names, enum values, error codes.
