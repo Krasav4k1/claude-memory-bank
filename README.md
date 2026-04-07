@@ -16,7 +16,7 @@ A persistent memory bank system for [Claude Code](https://claude.ai/code). Gives
 
 In Claude Code, say:
 
-> Setup github.com/andriiblyzniuk/claude-memory-bank
+> Setup github.com/Krasav4k1/claude-memory-bank
 
 Claude will read these instructions and set everything up automatically.
 
