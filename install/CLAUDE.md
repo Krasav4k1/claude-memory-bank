@@ -69,10 +69,6 @@ Does NOT require worktree:
 
 ---
 
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Specification & Design Documents
 
 - **Product description and roadmap: (IF EXIST)** `docs/PROJECT.md`
