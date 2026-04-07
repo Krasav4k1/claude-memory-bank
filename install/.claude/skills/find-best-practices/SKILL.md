@@ -50,7 +50,7 @@ digraph flow {
 
 For each search target, find **4 candidates**:
 
-**Source A — GitHub skill repos (find 2):**
+**Source A — GitHub skill repos (find 2 candidates):**
 
 Search GitHub for repos containing Claude Code skills (`.claude/skills/`, `SKILL.md`, or `CLAUDE.md` with coding conventions) for the detected language/framework.
 
@@ -67,7 +67,7 @@ For each candidate found:
 2. Note the repo's star count, last update date, and community engagement
 3. Save the full skill content for comparison
 
-**Source B — Blog/article conventions (find 2):**
+**Source B — Blog/article conventions (find 2 candidates):**
 
 Search for well-regarded coding convention guides, style guides, or community-endorsed best-practice posts that could be adapted into a skill.
 
@@ -87,7 +87,7 @@ For each article found:
 
 ### Step 3 — Evaluate & Compare
 
-For each set of 3 candidates (language set + framework set), evaluate on:
+For each set of 4 candidates (language set + framework set), evaluate on:
 
 | Criteria | Weight | What to check |
 |----------|--------|---------------|

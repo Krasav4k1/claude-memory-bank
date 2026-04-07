@@ -1,9 +1,12 @@
-# STOP HERE
-**Before proceed you should check the "FIRST ACTION IN EVERY CONVERSATION — NO EXCEPTIONS" section and "MANDATORY WORKFLOW — EXECUTE BEFORE EVERY TASK", *NEVER SKIP THEM* If you got it answer Memory Bank is ready**
+# Memory Bank
 
-# >>> FIRST ACTION IN EVERY CONVERSATION — NO EXCEPTIONS <<<
+**Before responding to any message**, check if the memory bank needs refreshing:
+1. Read `.llm/memory/INDEX.md` — check the "Last synced at" watermark
+2. If the project is a git repo and HEAD has moved past the watermark, invoke `@sync-memory-bank` agent
+3. If there's no watermark or INDEX.md is empty, invoke `@sync-memory-bank` agent for a full sync
+4. If up to date, proceed directly — no sync needed
 
-**Before reading imports, before answering questions, before ANY response to the user: invoke the `sync-memory-bank` agent.** This is not part of a workflow — it is a standalone, unconditional requirement. Do it even for simple questions. Do it even if the question seems unrelated to the codebase. Do it FIRST, then respond.
+**If you understand, respond: "Memory Bank is ready"**
 
 ---
 
@@ -20,7 +23,7 @@
 ## Step 1: Read the Memory Bank
 
 Search the memory bank for context relevant to your task:
-- Use `memory-searcher-v1` agent, or read `.llm/memory/INDEX.md` directly for one-line summaries of every document
+- Use `memory-searcher` agent, or read `.llm/memory/INDEX.md` directly for one-line summaries of every document
 - If the task relates to previous work and `claude-mem` MCP is available, use `claude-mem:mem-search` for past session context
 
 **Only after checking the memory bank**, go to specific source files — informed by what the memory bank tells you.
@@ -28,8 +31,8 @@ Search the memory bank for context relevant to your task:
 ## Step 2: Use Research Agents
 
 These agents are REQUIRED tools, not optional:
-- **`memory-searcher-v1`** — Search local repository knowledge (memory bank)
-- **`researcher-v1`** — Library docs, framework questions, web search (e.g., "how does Spring Modulith handle X?")
+- **`memory-searcher`** — Search local repository knowledge (memory bank)
+- **`researcher`** — Library docs, framework questions, web search
 
 ## Step 3: Worktree for Significant Work
 
@@ -86,6 +89,7 @@ After completing the implementation of a superpowers plan or spec (if superpower
 4. Suggest the user to run `/rename {planName}` to name the session after the completed plan
 
 ## TODO.md
+Create `TODO.md` if it's not exist.
 
 `TODO.md` in the project root tracks deferred items, quick reminders, and topics that surfaced during planning but are out of scope for the current task. **Check it before starting work** — it may contain context or constraints relevant to what you're building.
 

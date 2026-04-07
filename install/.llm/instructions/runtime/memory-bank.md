@@ -55,7 +55,7 @@ If the project maintains design specs, the memory bank and specs serve different
 
 ## Finding Things
 
-Use the `memory-searcher-v1` sub-agent for searches. It uses Grep and Glob within `.llm/memory/` only.
+Use the `memory-searcher` sub-agent for searches. It uses Grep and Glob within `.llm/memory/` only.
 
 For quick lookups, read `INDEX.md` directly — it has one-line summaries of every document.
 
@@ -72,20 +72,21 @@ For quick lookups, read `INDEX.md` directly — it has one-line summaries of eve
 
 **After any planning session** — when a design spec or plan is written and committed:
 1. **Always:** Update the features/roadmap document — add new decisions, update feature status
-2. **If new entities, fields, or enums were designed:** Update or create domain model documents
-3. **If new or changed REST endpoints:** Update endpoint documents
-4. **If affected:** Update business rules, architecture decisions, or overview documents as needed
-5. **If out-of-scope topics surfaced:** Add them to `TODO.md` (project root) with a brief description and which session surfaced them
+2. **If new data models were designed** — update domain/schema documents
+3. **If new or changed API surface** (REST endpoints, GraphQL mutations, routes, pages) — update the relevant section
+4. **If affected** — update business rules, architecture decisions, or overview documents as needed
+5. **If out-of-scope topics surfaced** — add them to `TODO.md` (project root) with a brief description and which session surfaced them
 6. Commit memory bank updates alongside the design spec or plan
 
 **After implementation** — when code changes are committed, check if the memory bank needs updating:
-1. **New or changed entity fields/enums** — update domain model documents
-2. **New, changed, or removed endpoints** — update endpoint documents
+1. **New or changed data models** — update domain/schema documents
+2. **New, changed, or removed API surface** (endpoints, routes, pages, components) — update the relevant section
 3. **New architecture decisions or patterns** — update relevant decision documents
 4. **New dependencies, framework upgrades, or package manager changes** — update tech stack document
-5. **Infrastructure changes** (CI/CD pipelines, containerization, reverse proxy, deploy scripts, hosting, server provisioning) — update infrastructure documents
+5. **Infrastructure changes** — update infrastructure documents
 6. **Feature completed** — update the features/roadmap document (move from planned to built)
-7. Keep updates minimal — only touch files where the memory bank would now give wrong information
+7. **New sections needed** — if a change introduces a new category of knowledge not covered by existing sections, create a new section in INDEX.md
+8. Keep updates minimal — only touch files where the memory bank would now give wrong information
 
 **When you discover stale information:** If a memory document contradicts the current code:
 1. Trust the code — code is always authoritative over memory
@@ -94,9 +95,9 @@ For quick lookups, read `INDEX.md` directly — it has one-line summaries of eve
 
 ### What NOT to Store
 - Exact code snippets that will go stale — reference file paths instead
-- Debugging sessions or temporary investigation notes — use scratchpad for those
+- Debugging sessions or temporary investigation notes
 - Information already in CLAUDE.md — don't duplicate
-- Ephemeral task state — use tasks or scratchpad instead
+- Ephemeral task state
 
 ### Creating New Documents
 1. Check if an existing document covers the topic (search first)

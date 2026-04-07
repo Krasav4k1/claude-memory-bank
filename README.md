@@ -4,12 +4,11 @@ A persistent memory bank system for [Claude Code](https://claude.ai/code). Gives
 
 ## What You Get
 
-- **Memory bank** (`.llm/memory/`) — structured knowledge base with sections for domains, endpoints, decisions, overviews, techniques, product, and infrastructure
+- **Memory bank** (`.llm/memory/`) — structured knowledge base with sections created dynamically based on your project type (e.g., routes/components for frontend, endpoints/domains for backend, or any mix)
 - **`sync-memory-bank` agent** — automatically builds or updates the memory bank from your codebase (full sync for new projects, incremental sync for ongoing work)
 - **`/find-best-practices` skill** — searches GitHub and the web for community-vetted Claude Code skills for your language and framework, compares candidates, and installs the best one
-- **`memory-searcher-v1` agent** — specialized sub-agent for fast memory bank lookups
-- **`researcher-v1` agent** — comprehensive research agent combining library docs (Context7), memory bank, web search, and local codebase search
-- **Scratchpad system** (`.llm/scratchpad/`) — temporary storage for preserving context within conversations
+- **`memory-searcher` agent** — specialized sub-agent for fast memory bank lookups
+- **`researcher` agent** — comprehensive research agent combining library docs (Context7), memory bank, web search, and local codebase search
 - **Instruction files** — runtime guidelines that teach Claude how to use and maintain the memory bank
 
 ## Installation
@@ -38,15 +37,26 @@ curl -L https://github.com/krasav4k1/claude-memory-bank/archive/main.tar.gz \
   | tar -xz --strip-components=1 -C . claude-memory-bank-main/install/
 ```
 
-This places `.llm/` and `.claude/` directly in the project root.
+This extracts into an `install/` directory in the project root, containing `.llm/`, `.claude/`, and `CLAUDE.md`.
 
-### Step 2: Handle CLAUDE.md
+### Step 2: Move files into place
 
-Check if `CLAUDE.md` exists in the project root:
+Move the extracted directories from `install/` to the project root:
 
-- **If it does NOT exist:** Move copy install/CLAUDE.md into the Root directory of the project
+```bash
+cp -r install/.llm . && cp -r install/.claude . 
+```
 
-- **If it DOES exist:** Update the existing project CLAUDE.md file with the content from install/CLAUDE.md. **PREPEND to the existing CLAUDE.md**
+Then handle `CLAUDE.md`:
+
+- **If `CLAUDE.md` does NOT exist** in the project root: `mv install/CLAUDE.md .`
+
+- **If `CLAUDE.md` DOES exist:** Prepend the memory bank content to the existing file:
+  ```bash
+  cat install/CLAUDE.md CLAUDE.md > CLAUDE.md.tmp && mv CLAUDE.md.tmp CLAUDE.md
+  ```
+
+Finally, clean up: `rm -rf install/`
 
 ### Step 3: Initialize the memory bank
 
@@ -93,29 +103,18 @@ your-project/
 │   ├── LLM.md                         # Entry point for all memory bank instructions
 │   ├── instructions/
 │   │   ├── runtime/
-│   │   │   ├── scratchpad.md          # Temporary storage guidelines
 │   │   │   ├── memory-bank.md         # Memory bank structure & format rules
 │   │   │   └── memory-bank-searching.md  # Search instructions for agent
-│   │   └── mcp/
-│   │       └── context7.md            # Context7 MCP integration (optional)
 │   ├── memory/
-│   │   ├── INDEX.md                   # Master index of all memory documents
-│   │   ├── decisions/                 # Architecture choices
-│   │   ├── domains/                   # Domain models, entities, enums
-│   │   ├── endpoints/                 # API reference
-│   │   ├── infrastructure/            # Deployment, CI/CD, hosting
-│   │   ├── overviews/                 # Big-picture architecture
-│   │   ├── product/                   # Business rules, features, roadmap
-│   │   └── techniques/                # Complex cross-module flows
-│   └── scratchpad/                    # Temporary storage (gitignored)
+│   │   ├── INDEX.md                   # Master index — sections created dynamically per project
+│   │   └── <sections>/               # Created by sync agent based on project type
 └── .claude/
-    ├── settings.local.json            # Permissions for skills
     ├── skills/
     │   └── find-best-practices/SKILL.md  # Best practices finder
     └── agents/
-        ├── memory-searcher-v1.md      # Memory bank search agent
-        ├── sync-memory-bank.md        # Memory bank sync skill agent
-        └── researcher-v1.md           # Comprehensive research agent
+        ├── memory-searcher.md         # Memory bank search agent
+        ├── sync-memory-bank.md        # Memory bank sync agent
+        └── researcher.md              # Comprehensive research agent
 ```
 
 ## License
