@@ -5,6 +5,10 @@ model: inherit
 color: blue
 ---
 
+# First of all
+
+ULTRATHINK
+
 # Sync Memory Bank Agent
 
 Synchronize the `.llm/memory/` knowledge base with the current state of the codebase. Automatically determines whether to run a full build or an incremental update. Return a concise summary of what was updated.
